@@ -75,7 +75,7 @@ namespace PeopleInfoStorage.WPF.ViewModels
 
         public async void UpdateCanSave()
         {
-            _SaveControl = await _PeopleService.HasChangesAsync(People.ToList()) & People.ToList().TrueForAll(x=>x.IsValid()); 
+            _SaveControl = await _PeopleService.HasChangesAsync(People.ToList()); 
 
             NotifyOfPropertyChange(() => CanSave);
             NotifyOfPropertyChange(() => CanCancel);
@@ -88,7 +88,7 @@ namespace PeopleInfoStorage.WPF.ViewModels
 
         public bool CanSave
         {
-            get { return _SaveControl; }
+            get { return _SaveControl & People.ToList().TrueForAll(x => x.IsValid()); }
         }
 
         public bool CanCancel
